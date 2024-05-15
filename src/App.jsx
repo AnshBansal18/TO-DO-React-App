@@ -35,8 +35,12 @@ function App() {
         <h3>What's your plan for today !!!</h3>
         <div className="form">
           <Stack spacing={2} direction="row">
-            <TextField value={name} onChange={(e) => setName(e.target.value)} label="Name" variant="standard" />
-            <TextField value={description} onChange={(e) => setDescription(e.target.value)} label="Description" variant="standard" />
+          <TextField value={name} onChange={(e) => setName(e.target.value)} label="Name" variant="standard" InputProps={{ 
+            style: { color: 'white' }}}
+            />
+    <TextField value={description} onChange={(e) => setDescription(e.target.value)} label="Description" variant="standard" InputProps={{
+      style: { color: 'white' }}}
+            />
             <Button onClick={addData} variant="contained" color="success">
               <AddIcon />
             </Button>
