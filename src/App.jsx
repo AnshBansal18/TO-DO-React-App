@@ -1,11 +1,8 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import Header from './Components/Header';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import Form from './Components/Form';
+import Data from './Components/Data';
 
 const getLocalItems = () => {
   const list = localStorage.getItem('list');
@@ -45,58 +42,20 @@ function App() {
       <Header />
       <div className="container">
         <h3>What's your plan for today !!!</h3>
-        <div className="form">
-          <Stack spacing={2} direction="row">
-            <TextField
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              label="Name"
-              variant="standard"
-              InputProps={{
-                style: { color: 'white' },
-              }}
-            />
-            <TextField
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              label="Description"
-              variant="standard"
-              InputProps={{
-                style: { color: 'white' },
-              }}
-            />
-            <Button onClick={addData} variant="contained" color="success">
-              <AddIcon />
-            </Button>
-          </Stack>
-        </div>
-        <div className="data">
-          <div className="dataval">
-            <div>Sno</div>
-            <div>Name</div>
-            <div>Description</div>
-            <div>Remove</div>
-          </div>
-          {data.map((element, index) => (
-            <div className="dataval" key={index}>
-              <div>{element.sno}</div>
-              <div>{element.name}</div>
-              <div>{element.description}</div>
-              <div>
-                <Button
-                  onClick={() => removeData(index)}
-                  variant="contained"
-                  color="error"
-                  className="delete-btn"
-                >
-                  <DeleteIcon />
-                </Button>
-              </div>
-            </div>
-          ))}
-        </div>
+        <Form 
+          name={name} 
+          description={description} 
+          setName={setName} 
+          setDescription={setDescription} 
+          addData={addData} 
+        />
+        <Data 
+          data={data} 
+          removeData={removeData} 
+        />
       </div>
     </>
   );
 }
+
 export default App;
