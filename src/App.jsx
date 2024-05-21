@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './Components/Header';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
@@ -7,10 +7,22 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+const getLocalItems = () => {
+  const list = localStorage.getItem('list');
+  if (list) {
+    return JSON.parse(localStorage.getItem('list'));
+  }
+  return [];
+};
+
 function App() {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(getLocalItems);
+
+  useEffect(() => {
+    localStorage.setItem('list', JSON.stringify(data));
+  }, [data]);
 
   const addData = () => {
     if (name.trim() !== '' && description.trim() !== '') {
@@ -35,11 +47,23 @@ function App() {
         <h3>What's your plan for today !!!</h3>
         <div className="form">
           <Stack spacing={2} direction="row">
-          <TextField value={name} onChange={(e) => setName(e.target.value)} label="Name" variant="standard" InputProps={{ 
-            style: { color: 'white' }}}
+            <TextField
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              label="Name"
+              variant="standard"
+              InputProps={{
+                style: { color: 'white' },
+              }}
             />
-    <TextField value={description} onChange={(e) => setDescription(e.target.value)} label="Description" variant="standard" InputProps={{
-      style: { color: 'white' }}}
+            <TextField
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              label="Description"
+              variant="standard"
+              InputProps={{
+                style: { color: 'white' },
+              }}
             />
             <Button onClick={addData} variant="contained" color="success">
               <AddIcon />
@@ -59,7 +83,12 @@ function App() {
               <div>{element.name}</div>
               <div>{element.description}</div>
               <div>
-                <Button onClick={() => removeData(index)} variant="contained" color="error" className="delete-btn">
+                <Button
+                  onClick={() => removeData(index)}
+                  variant="contained"
+                  color="error"
+                  className="delete-btn"
+                >
                   <DeleteIcon />
                 </Button>
               </div>
@@ -70,5 +99,4 @@ function App() {
     </>
   );
 }
-
 export default App;
